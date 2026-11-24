@@ -71,6 +71,21 @@
 // Nothing is logged as success until the round-trip comparison has
 // passed, so a green log line always means the on-disk entry is exact.
 
+// WHY THIS EXACT SEQUENCE
+// -------------------------
+// The emoji is U+1F3D4 SNOW-CAPPED MOUNTAIN followed by U+FE0F VARIATION
+// SELECTOR-16, which requests the emoji presentation of the mountain
+// glyph. Dropping the selector would still render a mountain on most
+// systems, but the pair as written is the canonical emoji form — the
+// exact bytes a phone keyboard produces — so the entry the judge sees
+// is the one every voter recognises, with no platform-dependent text
+// fallback. The two code points are also why the character count has
+// two honest answers (2 code points, 3 UTF-16 units); the gate allows
+// 1–8 either way, so there is no edge to argue and no risk in either
+// counting method. Nothing else is appended: no skin-tone modifier
+// (a mountain has no skin tone), no zero-width joiner, no second
+// emoji — one glyph, one trip, one vote.
+
 import { writeFileSync, readFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
